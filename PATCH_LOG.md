@@ -7,3 +7,4 @@
 | 2026-05-01 16:45 | calcpwn | v3 | Rollback to v0 | ⏪ ROLLED BACK |
 | 2026-05-01 16:46 | calcpwn | v4 | Sanitize eval() - whitelist math only | ❌ FAILED → rollback |
 | 2026-05-01 16:46 | calcpwn | v5 | Rollback to v3 | ⏪ ROLLED BACK |
+| 2026-05-01 16:49 | calcpwn | v6 | Sanitize eval() - whitelist math only | ✅ SAFE |
