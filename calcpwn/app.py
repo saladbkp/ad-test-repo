@@ -15,6 +15,15 @@ import json
 import re
 from flask import Flask, request, jsonify
 
+
+import re
+
+def safe_safe_eval(expr):
+    """Only allow mathematical expressions"""
+    if not re.match(r'^[0-9+\-*/().\s]+$', str(expr)):
+        raise ValueError('Invalid expression')
+    return safe_eval(expr)
+
 app = Flask(__name__)
 
 # File-based secret storage
@@ -83,7 +92,7 @@ def calc():
         return jsonify({"error": "expr required"}), 400
 
     try:
-        result = eval(expr)  # VULNERABLE!
+        result = safe_eval(expr)  # VULNERABLE!
         return jsonify({"expr": expr, "result": str(result)})
     except Exception as e:
         return jsonify({"error": str(e)}), 400
