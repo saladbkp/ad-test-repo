@@ -1,0 +1,20 @@
+{% include('header.html.twig') %}
+<main>
+	<form method="POST">
+		<h3>Access the club</h3>
+		<label>
+			Username
+			<input name="username" type="text" value="{{ username }}" />
+		</label>
+
+		<label>
+			Password
+			<input name="password" type="password" value="{{ password }}" />
+		</label>
+
+		<div class="error">{{ error }}</div>
+
+		<button>Login now</button>
+	</form>
+</main>
+{% include('footer.html.twig') %}

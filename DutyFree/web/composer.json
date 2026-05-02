@@ -1,0 +1,7 @@
+{
+    "require": {
+        "twig/twig": "^3.0",
+        "chillerlan/php-qrcode": "^5.0",
+        "greensea/keccak": "^1.0"
+    }
+}

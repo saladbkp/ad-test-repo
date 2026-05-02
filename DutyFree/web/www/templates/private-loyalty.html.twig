@@ -1,0 +1,40 @@
+{% include('header.html.twig') %}
+<main>
+	<h1>Balance history:</h1>
+
+	<div class="order-container">
+		<div class="order-list">
+			{% for order in orders %}
+				<div class="loyalty-list-item">
+					<small>{{ order.created_at }}</small>
+					<div><strong>New order:</strong> + {{ (order.total - order.loyalty_discount)|round(0, 'floor') }}</div>
+				</div>
+				{% if order.loyalty_discount %}
+				<hr />
+				<div class="loyalty-list-item">
+					<small>{{ order.created_at }}</small>
+					<div><strong>Redeemed:</strong> - {{ order.loyalty_discount }}</div>
+				</div>
+				{% endif %}
+			{% if not loop.last %}
+			<hr />
+			{% endif %} {% else %}
+			<div class="order-empty">you don't have any orders</div>
+			{% endfor %}
+		</div>
+
+		<div>
+			<div class="user-loyalty">
+				<h3>Loyalty card</h4>
+				<div>
+					<div class="card">
+						<img class="qr-code" src="{{ qr }}" />
+						<div class="full-name">{{ user.full_name }}</div>
+						<div class="points"><strong>Balance: </strong>{{ user.loyalty_points }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+{% include('footer.html.twig') %}

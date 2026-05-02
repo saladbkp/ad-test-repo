@@ -1,0 +1,55 @@
+h4 {
+	font-weight: 500;
+	margin-top: 0.5em;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2em;
+	gap: 1.5em;
+}
+
+input[type='file'] {
+	display: none;
+}
+
+label:has(input[type='file']) {
+	font-size: 1.25em;
+	background-color: rgba(97, 148, 172, 0.15);
+	padding: 3em;
+
+	outline: 2px dashed rgb(97, 148, 172);
+	outline-offset: -10px;
+
+	transition: background-color 0.15s linear;
+
+	margin-inline: auto;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+}
+
+label:has(input[type='file']).is-dragover {
+	outline-color: #c8dadf;
+	background-color: #fff;
+}
+
+label:has(input[type='file']) svg {
+	height: 80px;
+	color: rgb(97, 148, 172);
+	display: block;
+	margin-bottom: 40px;
+}
+
+img#preview {
+	width: 430px;
+	display: block;
+	margin-inline: auto;
+}
+
+button {
+	height: 40px;
+}

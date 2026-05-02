@@ -1,0 +1,72 @@
+h1 {
+	font-weight: 600;
+}
+
+.order-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+	font-size: 1.2em;
+	margin-block: 1em;
+}
+
+h3 {
+	font-weight: 600;
+	margin-top: 2em;
+	margin-bottom: 0 !important;
+}
+
+h3 + small {
+	display: block;
+	margin-bottom: 1em;
+}
+
+hr {
+	margin-block: 0.75em;
+	border: none;
+	border-top: solid 1px #ccc;
+}
+
+.delegation-list {
+	margin-block: 1.5em;
+}
+
+.delegation-empty {
+	font-style: italic;
+	text-align: center;
+	margin-block: 1.5em;
+}
+
+.delegation-list-item {
+	display: flex;
+	gap: 1em;
+	align-items: center;
+}
+
+.delegation-list-item button {
+	background-color: #bf0000;
+	padding: 0.5em;
+	transition: background-color 100ms ease-in-out;
+}
+
+.delegation-list-item button:hover {
+	background-color: #9f0000;
+}
+
+form.delegate-new {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1em;
+	padding-block: 0.25em;
+}
+
+form.delegate-new input {
+	border: solid 1px #999;
+	padding: 0.25em 0.5em;
+}
+
+.error {
+	text-align: center;
+	color: #bf0000;
+}

@@ -1,0 +1,21 @@
+services:
+    duty_free_shop:
+        build: web
+        ports:
+            - '6006:80'
+        environment:
+            VENUE: ccit
+            DB_HOST: mariadb
+            DB_USER: mariadb
+            DB_PASSWORD: password
+            DB_DATABASE: dutyfree
+            CUSTOM_SECRET: 346e06fbca2118c6b6fad670dc16b9e8944f2d9c189e524bd4b56a1ee3746882
+            PRIME: 7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed
+
+    mariadb:
+        image: 10.10.0.11:5000/library/mariadb:11.8.2-noble
+        environment:
+            MARIADB_ROOT_PASSWORD: password
+        volumes:
+            - ./database:/docker-entrypoint-initdb.d/:ro
+            - ./db_data:/var/lib/mysql

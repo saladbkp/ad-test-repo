@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: 10.10.0.11:5000/library/postgres:16
+    restart: unless-stopped
+    environment:
+      - 'POSTGRES_DB=db'
+      - 'POSTGRES_USER=admin'
+      - 'POSTGRES_PASSWORD=AcrsL3lOwcCoa8bc8BQaBLMouLMCAPKL'
+    volumes:
+      - ./postgres/init:/docker-entrypoint-initdb.d
+      - ./postgres/data:/var/lib/postgresql/data
+
+  cli:
+    build: ./cli
+    restart: unless-stopped
+    init: true
+    privileged: true
+    ports:
+      - '1337:1337'
+    volumes:
+      - './cli/build/cli:/home/user/chall:ro'
+    environment:
+      - 'LOG_STDERR=true'
+      - 'NETWORK=true'
+      - 'FORWARDED_ENV=POSTGRES_CLI_PASSWORD'
+      - 'POSTGRES_CLI_PASSWORD=H8med1meNskM1L7JmCMt3pyqSBWuRF10'
+
+  backend:
+    build: ./web/backend
+    environment:
+      - NODE_ENV=production
+      - 'POSTGRES_WEB_PASSWORD=r1X5hajOYt0olOJ5DRr0DLEdbYf57YNP'
+    restart: unless-stopped
+
+  frontend:
+    build: ./web/frontend
+    ports:
+      - '8081:80'
+    restart: unless-stopped
+

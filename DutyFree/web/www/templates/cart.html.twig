@@ -1,0 +1,106 @@
+{% include('header.html.twig') %}
+<main>
+	<h1>Your cart</h1>
+
+	<div class="cart-container">
+		<div class="cart-list">
+			{% for item in cart %}
+			<a href="/product?id={{ item.id }}">
+				<div class="cart-product">
+					<div>
+						<img src="{{ item.image }}" />
+						<div>
+							<div class="product-name">{{ item.name }}</div>
+							<div class="product-quantity"><strong>Quantity: </strong>{{ item.quantity }}</div>
+							{% if item.customization %}
+							<div class="product-quantity">
+								<strong>Customization: </strong><em>{{ item.customization }}</em>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="cart-price">&euro; {{ (item.quantity * item.price)|number_format(2, '.', ',') }}</div>
+				</div>
+			</a>
+			{% if not loop.last %}
+			<hr />
+			{% endif %} {% else %}
+			<div class="cart-empty">your cart is empty</div>
+			{% endfor %}
+		</div>
+
+		<div>
+			<form method="POST">
+				<label class="loyalty-points">
+					<input type="checkbox" name="use_loyalty" />
+					Use loyalty points
+				</label>
+
+				<div class="cart-total only-loyalty">
+					<div>Loyalty points:</div>
+					- {{ min(cart|reduce((carry, value) => carry + value.quantity * value.price, 0)|round(0, 'floor'), user.loyalty_points) }}
+				</div>
+
+				<div class="cart-total only-loyalty">
+					<div>Total:</div>
+					&euro;
+					{{ (cart|reduce((carry, value) => carry + value.quantity * value.price, 0) - min(cart|reduce((carry, value) => carry + value.quantity * value.price, 0)|round(0, 'floor'), user.loyalty_points))|number_format(2, '.', ',') }}
+				</div>
+
+				<div class="cart-total only-not-loyalty">
+					<div>Total:</div>
+					&euro;
+					{{ cart|reduce((carry, value) => carry + value.quantity * value.price, 0)|number_format(2, '.', ',') }}
+				</div>
+
+				<hr />
+
+				{% if cart|length > 0 %} {% if not is_logged %}
+				<div class="cart-pay">
+					<a href="/login">
+						<button type="button">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+							</svg>
+
+							Login to place your order
+						</button>
+					</a>
+				</div>
+				{% else %}
+				<div class="cart-pay">
+					<button class="muted">Pay at collection</button>
+				</div>
+
+				<div class="cart-pay">
+					<button>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="size-6">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+						</svg>
+
+						Pay now
+					</button>
+				</div>
+				{% endif %} {% endif %}
+			</form>
+		</div>
+	</div>
+</main>
+{% include('footer.html.twig') %}

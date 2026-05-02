@@ -1,0 +1,36 @@
+{% include('header.html.twig') %}
+<main>
+	<h1>Your recent orders</h1>
+
+	<div class="order-container">
+		<div class="order-list">
+			{% for order in orders %}
+				<a class="order-list-item" href="/user/order?id={{ order.id }}">
+					<div class="order-total small"><strong>Date: </strong>{{ order.created_at }}</div>
+					<div class="order-id">Order #{{ order.id }}</div>
+					<div class="order-total"><strong>Total: </strong>&euro; {{ order.total|number_format(2, '.', ',') }}</div>
+				</a>
+			{% if not loop.last %}
+			<hr />
+			{% endif %} {% else %}
+			<div class="order-empty">you don't have any orders</div>
+			{% endfor %}
+		</div>
+
+		<div>
+			<div class="user-loyalty">
+				<h3>Auth key</h4>
+				<div class="auth_key">{{ auth_key }}</div>
+				<h3>Loyalty card</h4>
+				<a href="/user/loyalty?id={{ user.id }}">
+					<div class="card">
+						<img class="qr-code" src="{{ qr }}" />
+						<div class="full-name">{{ user.full_name }}</div>
+						<div class="points"><strong>Balance: </strong>{{ user.loyalty_points }}</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</main>
+{% include('footer.html.twig') %}
