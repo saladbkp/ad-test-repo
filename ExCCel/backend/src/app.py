@@ -220,7 +220,10 @@ def get_worksheet(worksheet_id: str):
 
     cells = get_cells(worksheet.public_id)
 
-    process_formulas(worksheet.public_id, cells, request.args.get('timestamp', ''))
+    ts = request.args.get('timestamp', '')
+    if '\x00' in ts or len(ts) > 64:
+        return make_error_response(400, 'Invalid timestamp')
+    process_formulas(worksheet.public_id, cells, ts)
 
     return make_json_response(worksheet.as_dict(cells))
 
@@ -302,7 +305,10 @@ def save_worksheet(worksheet_id: str):
 
     save_cells(worksheet.public_id, cells)
 
-    process_formulas(worksheet.public_id, cells, request.args.get('timestamp', ''))
+    ts = request.args.get('timestamp', '')
+    if '\x00' in ts or len(ts) > 64:
+        return make_error_response(400, 'Invalid timestamp')
+    process_formulas(worksheet.public_id, cells, ts)
 
     return make_json_response(worksheet.as_dict(cells))
 
